@@ -10,8 +10,6 @@ export default async function createPostAction(formData: FormData) {
      if (!user) throw new Error('User not authenticated.');
 
      const postInput = formData.get('postInput') as string;
-     const image = formData.get('image') as File;
-     let imageUrl: string | undefined;
 
      if (!postInput) throw new Error('You must provide a post input.');
 
@@ -20,18 +18,19 @@ export default async function createPostAction(formData: FormData) {
           userImage: user.imageUrl,
           firstName: user.firstName || "",
           lastName: user.lastName || "",
+          username: user.username || "",
      }
 
      try {
-          if (image.size > 0) {} else {
-               const body = {
-                    user: userDB,
-                    text: postInput,
-               };
+          const body = {
+               user: userDB,
+               text: postInput,
+          };
 
-               await Post.create(body);
-          }
-     } catch (error: any) {
+          await Post.create(body);
+     }
+     
+     catch (error: any) {
           console.log("Error :: createPostAction : ", error);
      }
 }

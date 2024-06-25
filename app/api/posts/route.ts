@@ -7,12 +7,11 @@ import { NextResponse } from "next/server";
 export interface AddPostRequestBody {
      user: IUser;
      text: string;
-     imageUrl?: string | null;
 }
 
 export async function POST(request: Request) {
      auth().protect();
-     const { user, text, imageUrl }: AddPostRequestBody = await request.json();
+     const { user, text }: AddPostRequestBody = await request.json();
 
      try {
           await connectToDatabase();
@@ -20,7 +19,6 @@ export async function POST(request: Request) {
           const postData: IPostBase = {
                user,
                text,
-               ...(imageUrl && { imageUrl }),
           };
 
           const post = await Post.create(postData);

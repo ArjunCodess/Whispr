@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { ImageIcon, XIcon } from "lucide-react";
 import { toast } from "sonner";
+import createPostAction from "@/actions/createPostAction";
 
 /**
  * PostForm component for creating a new post.
@@ -17,10 +18,6 @@ import { toast } from "sonner";
 export default function PostForm() {
      // Refs for form and file input elements
      const ref = useRef<HTMLFormElement>(null);
-     const fileInputRef = useRef<HTMLInputElement>(null);
-
-     // State for image preview
-     const [preview, setPreview] = useState<string | null>(null);
 
      // User context from Clerk
      const { user } = useUser();
@@ -41,26 +38,13 @@ export default function PostForm() {
 
           if (!text) throw new Error("You must provide a post input");
 
-          setPreview(null);
-
           try {
-               // await createPostAction(formDataCopy);
-               return;
-          } catch (error: any) {
+               await createPostAction(formDataCopy);
+          }
+
+          catch (error: any) {
                toast.error(`Error creating post: ${error}`);
           }
-     };
-
-     /**
-      * Handles the image change event.
-      *
-      * @param {React.ChangeEvent<HTMLInputElement>} e - The change event.
-      */
-
-     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const file = e.target.files?.[0];
-
-          if (file) setPreview(URL.createObjectURL(file));
      };
 
      return (
@@ -88,27 +72,7 @@ export default function PostForm() {
 
                          <input type="text" name="postInput" placeholder="Start writing a post..." className="flex-1 outline-none rounded-full py-3 px-4 border" />
 
-                         <input ref={fileInputRef} type="file" name="image" accept="image/*" hidden onChange={handleImageChange} />
-
                          <Button type="submit">Post</Button>
-                    </div>
-
-                    {preview && <div className="mt-2">
-                         <img src={preview} alt="Preview" className="w-full object-cover" />
-                    </div>}
-
-                    <div className="flex justify-end mt-2">
-                         <Button type="button" onClick={() => fileInputRef.current?.click()} variant={preview ? "secondary" : "outline"}>
-                              <ImageIcon className="mr-2" size={16} color="currentColor" />
-                              {preview ? "Change" : "Add"} Image
-                         </Button>
-
-                         {preview && (
-                              <Button type="button" onClick={() => setPreview(null)} variant="outline" className="ml-2">
-                                   <XIcon className="mr-2" size={16} color="currentColor" />
-                                   Remove Image
-                              </Button>
-                         )}
                     </div>
                </form>
 

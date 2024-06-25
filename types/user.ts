@@ -3,4 +3,5 @@ export interface IUser {
      userImage: string;
      firstName: string;
      lastName?: string;
+     username: string;
 }
