@@ -118,8 +118,10 @@ export default function PostOptions({ postId, post }: { postId: string; post: IP
                     </Button>
                </div>
 
+               <hr />
+
                {isCommentsOpen && (
-                    <div className="p-4">
+                    <div className="p-4 pt-6">
                          {user?.id && <CommentForm postId={postId} />}
                          <CommentFeed post={post} />
                     </div>

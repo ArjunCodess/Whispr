@@ -39,12 +39,12 @@ export default function CommentFeed({ post }: { post: IPostDocument }) {
                                         </p>
                                    </div>
 
-                                   <p className="text-xs text-gray-400">
+                                   <p className="mt-1 text-xs text-gray-400">
                                         <TimeAgo date={new Date(comment.createdAt)} />
                                    </p>
                               </div>
 
-                              <p className="mt-3 text-sm">{comment.text}</p>
+                              <p className="mb-1 mt-3 text-sm">{comment.text}</p>
                          </div>
                     </div>
                ))}

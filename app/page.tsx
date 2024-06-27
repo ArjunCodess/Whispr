@@ -1,7 +1,7 @@
 import PostFeed from "@/components/PostFeed";
 import PostForm from "@/components/PostForm";
 import UserInformation from "@/components/UserInformation";
-// import Widget from "@/components/Widget";
+import Widget from "@/components/Widget";
 import { Post } from "@/mongodb/models/post";
 import { SignedIn } from "@clerk/nextjs";
 import { connectToDatabase } from "@/mongodb/database";
@@ -27,7 +27,7 @@ export default async function Home() {
                </section>
 
                <section className="hidden xl:inline justify-center col-span-2">
-                    {/* <Widget /> */}
+                    <Widget />
                </section>
           </div>
      );
