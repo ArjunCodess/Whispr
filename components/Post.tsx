@@ -13,9 +13,8 @@ import { toast } from "sonner";
 
 export default function Post({ post }: { post: IPostDocument }) {
      const { user } = useUser();
-     const postUserId = post.user.userId;
-     const isAuthor = user?.id === postUserId;
-     
+     const isAuthor = user?.id === post.user.userId;
+
      return (
           <div className="bg-white rounded-md border">
                <div className="p-4 flex space-x-2">
@@ -35,7 +34,7 @@ export default function Post({ post }: { post: IPostDocument }) {
                                    {post.user.firstName} {post.user.lastName}{" "}
                                    {isAuthor && (
                                         <Badge className="ml-2" variant="secondary">
-                                             Author
+                                             You
                                         </Badge>
                                    )}
                               </p>
@@ -52,21 +51,24 @@ export default function Post({ post }: { post: IPostDocument }) {
                               <Button
                                    variant="outline"
                                    onClick={() => {
-                                        const promise = deletePostAction(post._id);
+                                        const promise = deletePostAction(post._id as string);
                                         toast.promise(promise, {
                                              loading: "Deleting post...",
                                              success: "Post deleted!",
                                              error: "Error deleting post",
                                         });
                                    }}
+                                   className="px-2"
                               >
-                                   <Trash2 />
+                                   <Trash2 className="h-5" />
                               </Button>
                          )}
                     </div>
                </div>
 
-               <PostOptions postId={post._id} post={post} />
+               <p className="px-4 mt-2">{post.text}</p>
+
+               <PostOptions postId={post._id as string} post={post} />
           </div>
      );
 }

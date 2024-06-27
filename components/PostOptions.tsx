@@ -12,13 +12,7 @@ import { UnlikePostRequestBody } from "@/app/api/posts/[post_id]/unlike/route";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 
-export default function PostOptions({
-     postId,
-     post,
-}: {
-     postId: string;
-     post: IPostDocument;
-}) {
+export default function PostOptions({ postId, post }: { postId: string; post: IPostDocument }) {
      const [isCommentsOpen, setIsCommentsOpen] = useState(false);
      const { user } = useUser();
      const [liked, setLiked] = useState(false);
@@ -31,9 +25,7 @@ export default function PostOptions({
      }, [post, user]);
 
      const likeOrUnlikePost = async () => {
-          if (!user?.id) {
-               throw new Error("User not authenticated");
-          }
+          if (!user?.id) throw new Error("User not authenticated");
 
           const originalLiked = liked;
           const originalLikes = likes;
@@ -42,9 +34,7 @@ export default function PostOptions({
                ? likes?.filter((like) => like !== user.id)
                : [...(likes ?? []), user.id];
 
-          const body: LikePostRequestBody | UnlikePostRequestBody = {
-               userId: user.id,
-          };
+          const body: LikePostRequestBody | UnlikePostRequestBody = { userId: user.id };
 
           setLiked(!liked);
           setLikes(newLikes);
@@ -62,12 +52,15 @@ export default function PostOptions({
 
           if (!response.ok) {
                setLiked(originalLiked);
+               setLikes(originalLikes);
                throw new Error("Failed to like post");
           }
 
           const fetchLikesResponse = await fetch(`/api/posts/${postId}/like`);
+
           if (!fetchLikesResponse.ok) {
                setLikes(originalLikes);
+               setLiked(originalLiked);
                throw new Error("Failed to fetch likes");
           }
 
@@ -106,9 +99,7 @@ export default function PostOptions({
                          onClick={likeOrUnlikePost}
                     >
                          {/* If user has liked the post, show filled thumbs up icon */}
-                         <ThumbsUpIcon
-                              className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")}
-                         />
+                         <ThumbsUpIcon className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")} />
                          Like
                     </Button>
 
@@ -124,16 +115,6 @@ export default function PostOptions({
                               )}
                          />
                          Comment
-                    </Button>
-
-                    <Button variant="ghost" className="postButton">
-                         <Repeat2 className="mr-1" />
-                         Repost
-                    </Button>
-
-                    <Button variant="ghost" className="postButton">
-                         <Send className="mr-1" />
-                         Send
                     </Button>
                </div>
 
