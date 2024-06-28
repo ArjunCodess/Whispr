@@ -32,14 +32,14 @@ export default function Post({ post }: { post: IPostDocument }) {
                          <div>
                               <p className="font-semibold">
                                    {post.user.firstName} {post.user.lastName}{" "}
+                                   <span className="text-xs text-gray-600">
+                                        @{post.user.username}
+                                   </span>
                                    {isAuthor && (
-                                        <Badge className="ml-2" variant="secondary">
+                                        <Badge className="ml-2">
                                              You
                                         </Badge>
                                    )}
-                              </p>
-                              <p className="text-xs text-gray-400">
-                                   @{post.user.username}
                               </p>
 
                               <p className="text-xs text-gray-400">
@@ -66,7 +66,7 @@ export default function Post({ post }: { post: IPostDocument }) {
                     </div>
                </div>
 
-               <p className="px-4 mt-2">{post.text}</p>
+               <p className="px-4 my-2">{post.text}</p>
 
                <PostOptions postId={post._id as string} post={post} />
           </div>

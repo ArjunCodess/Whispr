@@ -27,7 +27,7 @@ export default async function UserInformation({ posts }: { posts: IPostDocument[
 
                <SignedIn>
                     <div className="text-center">
-                         <p className="font-semibold">{firstName} {lastName}</p>
+                         <h1 className="font-semibold">{firstName} {lastName}</h1>
 
                          <p className="text-xs">@{username}</p>
                     </div>

@@ -70,55 +70,37 @@ export default function PostOptions({ postId, post }: { postId: string; post: IP
      };
 
      return (
-          <div className="">
-               <div className="flex justify-between p-4">
-                    <div>
-                         {likes && likes.length > 0 && (
-                              <p className="text-xs text-gray-500 cursor-pointer hover:underline">
-                                   {likes.length} likes
-                              </p>
-                         )}
-                    </div>
-
-                    <div>
-                         {post?.comments && post.comments.length > 0 && (
-                              <p
-                                   onClick={() => setIsCommentsOpen(!isCommentsOpen)}
-                                   className="text-xs text-gray-500 cursor-pointer hover:underline"
-                              >
-                                   {post.comments.length} comments
-                              </p>
-                         )}
-                    </div>
-               </div>
-
+          <div className="mt-4">
                <div className="flex p-2 justify-between px-2 border-t">
-                    <Button
-                         variant="ghost"
-                         className="postButton"
-                         onClick={likeOrUnlikePost}
-                    >
-                         {/* If user has liked the post, show filled thumbs up icon */}
-                         <ThumbsUpIcon className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")} />
-                         Like
-                    </Button>
-
-                    <Button
-                         variant="ghost"
-                         className="postButton"
-                         onClick={() => setIsCommentsOpen(!isCommentsOpen)}
-                    >
-                         <MessageCircle
-                              className={cn(
-                                   "mr-1",
-                                   isCommentsOpen && "text-gray-600 fill-gray-600"
-                              )}
-                         />
-                         Comment
-                    </Button>
+                    {likes && (
+                         <Button
+                              variant="ghost"
+                              className="postButton"
+                              onClick={likeOrUnlikePost}
+                         >
+                              {/* If user has liked the post, show filled thumbs up icon */}
+                              <ThumbsUpIcon className={cn("mr-1", liked && "text-[#4881c2] fill-[#4881c2]")} />
+                              {likes.length <= 0 ? "No likes" : likes.length}
+                         </Button>
+                    )}
+                    {post?.comments && (
+                         <Button
+                              variant="ghost"
+                              className="postButton"
+                              onClick={() => setIsCommentsOpen(!isCommentsOpen)}
+                         >
+                              <MessageCircle
+                                   className={cn(
+                                        "mr-1",
+                                        isCommentsOpen && "text-gray-600 fill-gray-600"
+                                   )}
+                              />
+                              {post.comments.length <= 0 ? "No comments" : post.comments.length}
+                         </Button>
+                    )}
                </div>
 
-               <hr />
+               <hr className={`${!isCommentsOpen ? "hidden": "block"}`} />
 
                {isCommentsOpen && (
                     <div className="p-4 pt-6">
