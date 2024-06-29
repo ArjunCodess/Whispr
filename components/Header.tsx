@@ -9,13 +9,13 @@ export default async function Header() {
 
                <div className="flex-1" />
 
-               <div className="flex items-center space-x-4 px-6">
+               <div className="flex items-center">
                     <SignedIn>
                          <UserButton />
                     </SignedIn>
 
                     <SignedOut>
-                         <Button asChild variant="secondary">
+                         <Button asChild>
                               <SignInButton />
                          </Button>
                     </SignedOut>

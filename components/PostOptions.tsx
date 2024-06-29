@@ -70,7 +70,7 @@ export default function PostOptions({ postId, post }: { postId: string; post: IP
      };
 
      return (
-          <div className="mt-4">
+          <div className="">
                <div className="flex p-2 justify-between px-2 border-t">
                     {likes && (
                          <Button

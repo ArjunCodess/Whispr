@@ -10,10 +10,16 @@ import { Button } from "./ui/button";
 import ReactTimeago from "react-timeago";
 import { Badge } from "./ui/badge";
 import { toast } from "sonner";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function Post({ post }: { post: IPostDocument }) {
      const { user } = useUser();
      const isAuthor = user?.id === post.user.userId;
+
+     const [isExpanded, setIsExpanded] = useState(false);
+
+     const toggleReadMore = () => setIsExpanded(!isExpanded);
 
      return (
           <div className="bg-white rounded-md border">
@@ -66,7 +72,29 @@ export default function Post({ post }: { post: IPostDocument }) {
                     </div>
                </div>
 
-               <p className="px-4 my-2">{post.text}</p>
+               <div>
+                    <div>
+                         <div className="px-4 pb-2 mt-2">
+                              {isExpanded ? post.text : post.text.length > 200 ? post.text.slice(0, 200) + "..." : post.text}
+                              {post.text.length > 200 && (
+                                   <button onClick={toggleReadMore} className="text-blue-500 inline">
+                                        {isExpanded ? 'Read Less' : 'Read More'}
+                                   </button>
+                              )}
+                         </div>
+                    </div>
+
+                    {/* If image uploaded put it here... */}
+                    {post.imageUrl && (
+                         <Image
+                              src={post.imageUrl}
+                              alt="Post Image"
+                              width={500}
+                              height={500}
+                              className="w-full mx-auto border-t"
+                         />
+                    )}
+               </div>
 
                <PostOptions postId={post._id as string} post={post} />
           </div>
