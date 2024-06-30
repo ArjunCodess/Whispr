@@ -6,8 +6,6 @@ import { IUser } from "@/types/user";
 import { currentUser } from "@clerk/nextjs/server";
 import { v2 as cloudinary } from 'cloudinary'
 import { revalidatePath } from "next/cache";
-import { randomUUID } from "crypto";
-import { getCldOgImageUrl } from "next-cloudinary";
 
 export default async function createPostAction(formData: FormData) {
      const user = await currentUser();

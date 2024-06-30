@@ -12,6 +12,7 @@ import { Badge } from "./ui/badge";
 import { toast } from "sonner";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Post({ post }: { post: IPostDocument }) {
      const { user } = useUser();
@@ -36,7 +37,7 @@ export default function Post({ post }: { post: IPostDocument }) {
 
                     <div className="flex justify-between flex-1">
                          <div>
-                              <p className="font-semibold">
+                              <Link href={`/profile/${post.user.username}`} className="font-semibold hover:underline">
                                    {post.user.firstName} {post.user.lastName}{" "}
                                    <span className="text-xs text-gray-600">
                                         @{post.user.username}
@@ -46,7 +47,7 @@ export default function Post({ post }: { post: IPostDocument }) {
                                              You
                                         </Badge>
                                    )}
-                              </p>
+                              </Link>
 
                               <p className="text-xs text-gray-400">
                                    <ReactTimeago date={new Date(post.createdAt)} />

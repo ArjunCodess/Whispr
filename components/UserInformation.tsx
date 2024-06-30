@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { IPostDocument } from "@/mongodb/models/post";
 import React from "react";
+import Link from "next/link";
 
 export default async function UserInformation({ posts }: { posts: IPostDocument[] }) {
      const user = await currentUser();
@@ -27,7 +28,7 @@ export default async function UserInformation({ posts }: { posts: IPostDocument[
 
                <SignedIn>
                     <div className="text-center">
-                         <h1 className="font-semibold">{firstName} {lastName}</h1>
+                         <Link href={`/profile/${username}`} className="font-semibold underline underline-offset-2">{firstName} {lastName}</Link>
 
                          <p className="text-xs">@{username}</p>
                     </div>
